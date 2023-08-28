@@ -1,8 +1,24 @@
 const express = require('express');
 const app = express();
-const Joi = require('joi');
+// const Joi = require('joi');
+const groceriesRoute = require('./routes/groceries');
+const marketsRoute = require('./routes/markets');
 
 app.use(express.json());
+app.use(express.urlencoded());
+const PORT = 3001;
+
+app.use((req,res, next) => {
+    console.log(`${req.method}:${req.url}`);
+    next();
+})
+
+app.use(groceriesRoute);
+app.use('/api/v1/markets', marketsRoute);
+
+app.listen(PORT, () => console.log(`Running Express Server on Port ${PORT}!`));
+
+
 
 /*
 app.get();
@@ -10,6 +26,7 @@ app.post();
 app.put();
 app.delete(); */
 
+/*
 const courses = [
     {id:1, name: 'Maths'},
     {id:2, name: 'Physics'},
@@ -78,16 +95,11 @@ app.put('./api/courses/:id', (req, res) => {
         res.send(course)
     })
 
-})
-
-
-
-
-
-
+});
 
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Listening to port ${port}...`)
-});
+}); */
+
