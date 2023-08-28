@@ -16,20 +16,20 @@ const groceryList = [
     }
 ];
 
-router.get('/groceries', (req, res) => {
+router.get('/', (req, res) => {
     res.send(groceryList);
 });
 
-router.get('/groceries/:item', (req, res) => {
+router.get('/:item', (req, res) => {
     const {item} = req.params;
     const groceryItem = groceryList.find((g) => item === g.item);
     res.send(groceryItem);
 });
 
-router.post('/groceries', (req, res) =>{
+router.post('/', (req, res) =>{
     console.log(req.body);
     groceryList.push(req.body);
-    req.send(201);
+    res.send(201);
 });
 
 module.exports = router;
