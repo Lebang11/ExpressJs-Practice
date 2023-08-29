@@ -1,13 +1,23 @@
 const express = require('express');
 const app = express();
 const cookieParser = require('cookie-parser');
-// const Joi = require('joi');
+const session = require('express-session');
 const groceriesRoute = require('./routes/groceries');
 const marketsRoute = require('./routes/markets');
+const router = require('./routes/groceries');
 
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use(
+    session({
+        secret: "ADASIJIOJSFIO",
+        resave: false,
+        saveUninitialized: false
+    })
+);
+
+
 
 const PORT = 3001;
 
