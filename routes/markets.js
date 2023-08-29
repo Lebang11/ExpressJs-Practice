@@ -31,6 +31,13 @@ const supermarkets = [
     
 ]
 
+router.use((req, res, next) => {
+    if (req.session.user) next();
+    else {
+        res.send(401);
+    }
+})
+
 router.get('/', (req, res) => {
     const {miles} = req.query;
     const parsedMiles = parseInt(miles);

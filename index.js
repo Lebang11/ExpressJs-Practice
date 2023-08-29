@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const groceriesRoute = require('./routes/groceries');
 const marketsRoute = require('./routes/markets');
-const router = require('./routes/groceries');
+const authRoute = require('./routes/auth');
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -26,8 +26,11 @@ app.use((req,res, next) => {
     next();
 })
 
+
+
 app.use('/api/v1/groceries', groceriesRoute);
 app.use('/api/v1/markets', marketsRoute);
+app.use('/api/v1/auth', authRoute);
 
 app.listen(PORT, () => console.log(`Running Express Server on Port ${PORT}!`));
 
