@@ -1,15 +1,21 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
 require('./strategies/local');
 
+
 //Routes
 const groceriesRoute = require('./routes/groceries');
 const marketsRoute = require('./routes/markets');
 const authRoute = require('./routes/auth');
+
+require('./database');
+const PORT = 3001;
+
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -18,19 +24,25 @@ app.use(
     session({
         secret: "ADASIJIOJSFIO",
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: 'mongodb://localhost:27017/expressjs_tutorial'
+        })
     })
 );
 
-require('./database');
+app.use((req,res, next) => {
+    console.log(MongoStore);
+    next();
+});
 
-
-const PORT = 3001;
 
 app.use((req,res, next) => {
     console.log(`${req.method}:${req.url}`);
     next();
 });
+
+
 
 app.use(passport.initialize());
 app.use(passport.session());
