@@ -3,6 +3,26 @@ const { Strategy } = require('passport-local');
 const { comparePassword } = require('../utils/helpers');
 const User = require('../database/schemas/User');
 
+passport.serializeUser((user, done) => {
+    console.log('Serializing User');
+    console.log(user);
+    done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    console.log('Deserializing User');
+    console.log(id);
+    try{
+        const user = await User.findById(id);
+        if (!user) throw new Error('User not found');
+        console.log(user);
+        done(null, user);
+    } catch (err) {
+        console.log(err);
+        done(err, null);
+    }
+});
+
 passport.use(
     new Strategy({
         usernameField: 'email',
