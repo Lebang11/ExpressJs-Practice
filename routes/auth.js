@@ -6,7 +6,7 @@ const { hashPassword, comparePassword } = require('../utils/helpers');
 
 router.post('/login', async (req, res) => {
     const { email, password} = req.body;
-    if (!email || !password) return res.send(400);
+    /*if (!email || !password) return res.send(400);
     const userDB = await User.findOne({email});
     if (!userDB) return res.send(401);
     const isValid = comparePassword(password, userDB.password);
@@ -16,7 +16,7 @@ router.post('/login', async (req, res) => {
         return res.send(200);
     } else {
         return res.send(401);
-    }
+    } */
     
 });
 
